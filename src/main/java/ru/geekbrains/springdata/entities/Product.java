@@ -13,10 +13,19 @@ public class Product {
     @Column(name = "title")
     private String title;
 
+    @Column(name = "score")
+    private int score;
+
     @Column(name = "cost")
     private int cost;
 
     public Product() {
+    }
+
+    public Product(String title, int cost) {
+        this.title = title;
+        this.cost = cost;
+        this.score = 0;
     }
 
     public Long getId() {
@@ -43,11 +52,20 @@ public class Product {
         this.cost = cost;
     }
 
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
+    }
+
     @Override
     public String toString() {
         return "Product{" +
                 "id=" + id +
                 ", title='" + title + '\'' +
+                ", score='" + score + '\'' +
                 ", cost=" + cost +
                 '}';
     }

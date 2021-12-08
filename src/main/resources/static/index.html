@@ -1,10 +1,63 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+
+<html ng-app="app" lang="ru">
+
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <title>Products</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular.min.js"></script>
+    <script src="index.js"></script>
 </head>
+
 <body>
 
+<div class="container" ng-controller="indexController">
+    <h3>Product's List</h3>
+    <table class="table table-dark table-hover">
+        <tr>
+            <td>ID</td>
+            <td>Product's name</td>
+            <td>Cost</td>
+            <td>Number</td>
+            <td>Action</td>
+        </tr>
+        <tbody>
+        <tr ng-repeat="p in ProductsList">
+            <td>{{p.id}}</td>
+            <td>{{p.title}}</td>
+            <td>{{p.cost}}</td>
+            <td>
+                <button class="btn btn-outline-success" ng-click="changeScore(p.id, -1)">-</button>
+                {{p.score}}
+                <button class="btn btn-outline-success" ng-click="changeScore(p.id, 1)">+</button>
+            </td>
+            <td>
+                <button class="btn btn-outline-danger" ng-click="deleteProduct(p.id)">Delete</button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <h3>Add product via JSON</h3>
+    <form novalidate ng-submit="addProductJson()">
+        <input class="form-control" type="text" placeholder="Title" ng-model="ProductJson.title">
+        <p></p>
+        <input class="form-control" type="number" placeholder="Cost" ng-model="ProductJson.cost">
+        <p></p>
+        <button type="submit" class="btn btn-warning">Create product JSON</button>
+    </form>
+
+    <h3>Filter by minimum and / or maximum price</h3>
+    <form novalidate ng-submit="loadProducts()">
+        <input class="form-control" type="number" placeholder="min" ng-model=filter.min>
+        <p></p>
+        <input class="form-control" type="number" placeholder="max" ng-model=filter.max>
+        <p></p>
+        <button type="submit" class="btn btn-warning">Apply Filters</button>
+    </form>
+</div>
 </body>
 </html>
