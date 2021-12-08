@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.geekbrains.springdata.entities.Product;
+import ru.geekbrains.springdata.exceptions.ProductNotFoundException;
 import ru.geekbrains.springdata.repositories.ProductRepository;
 import ru.geekbrains.springdata.services.ProductService;
 
@@ -17,8 +18,8 @@ public class ProductServiceImpl implements ProductService {
 
     @Transactional
     @Override
-    public List<Product> getAllProducts() {
-        return productRepository.findAll();
+    public List<Product> getAllProducts(Integer min, Integer max) {
+        return productRepository.findAllByCostBetweenOrderByCostAsc(min, max);
     }
 
     @Transactional
@@ -31,6 +32,20 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public void addProduct() {
 //        productRepository.save();
+    }
+
+    @Transactional
+    @Override
+    public void changeScore(Long productId, Integer delta) {
+        Product product = productRepository.findById(productId).orElseThrow(
+                () -> new ProductNotFoundException("Unable to change product's score. Product not found, id: " + productId));
+        product.setScore(product.getScore() + delta);
+    }
+
+    @Transactional
+    @Override
+    public void saveProduct(Product product) {
+        productRepository.save(product);
     }
 
     @Transactional
