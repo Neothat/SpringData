@@ -7,10 +7,12 @@ angular.module('app', []).controller('indexController', function ($scope, $http)
             method: 'get',
             params: {
                 min: $scope.filter ? $scope.filter.min : null,
-                max: $scope.filter ? $scope.filter.max : null
+                max: $scope.filter ? $scope.filter.max : null,
+                title: $scope.title ? $scope.filter.title : null,
+                page: $scope.page ? $scope.filter.page : null
             }
         }).then(function (response) {
-            $scope.ProductsList = response.data;
+            $scope.ProductsList = response.data.content;
         });
     };
 
@@ -40,22 +42,6 @@ angular.module('app', []).controller('indexController', function ($scope, $http)
             .then(function (response) {
                 $scope.loadProducts();
             });
-    }
-
-    $scope.applyFilters = function () {
-        console.log($scope.calcAdd);
-        $http({
-            url: contextPath + '/calc/add',
-            method: 'get',
-            params: {
-                a: $scope.calcAdd.a,
-                b: $scope.calcAdd.b
-            }
-
-        }).then(function (response) {
-            alert('Сумма равна ' + response.data.value);
-            $scope.calcAdd.a = 10000;
-        });
     }
 
     $scope.loadProducts();

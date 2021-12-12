@@ -1,12 +1,11 @@
 package ru.geekbrains.springdata.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 import ru.geekbrains.springdata.entities.Product;
 import ru.geekbrains.springdata.exceptions.ProductNotFoundException;
 import ru.geekbrains.springdata.services.ProductService;
-
-import java.util.List;
 
 @RestController
 public class ProductController {
@@ -14,12 +13,14 @@ public class ProductController {
     private ProductService productService;
 
     @GetMapping("/products")
-    public List<Product> getAllProducts(@RequestParam(name = "min", defaultValue = "0") Integer min,
-                                        @RequestParam(name = "max",required = false) Integer max) {
-        if (max == null){
-            max = Integer.MAX_VALUE;
+    public Page<Product> getAllProducts(@RequestParam(name = "min", required = false) Integer min,
+                                        @RequestParam(name = "max", required = false) Integer max,
+                                        @RequestParam(name = "title", required = false) String title,
+                                        @RequestParam(name = "p", defaultValue = "1") Integer page) {
+        if (page < 1){
+            page =1;
         }
-        return productService.getAllProducts(min, max);
+        return productService.find(min, max, title, page);
     }
 
     @GetMapping("/products/{id}")
