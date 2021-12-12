@@ -9,8 +9,8 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.geekbrains.springdata.entities.Product;
 import ru.geekbrains.springdata.exceptions.ProductNotFoundException;
 import ru.geekbrains.springdata.repositories.ProductRepository;
+import ru.geekbrains.springdata.repositories.specifications.ProductSpecifications;
 import ru.geekbrains.springdata.services.ProductService;
-import ru.geekbrains.springdata.specifications.ProductSpecifications;
 
 import java.util.List;
 import java.util.Optional;
