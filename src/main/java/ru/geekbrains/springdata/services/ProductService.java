@@ -1,5 +1,6 @@
 package ru.geekbrains.springdata.services;
 
+import org.springframework.data.domain.Page;
 import ru.geekbrains.springdata.entities.Product;
 
 import java.util.List;
@@ -17,4 +18,6 @@ public interface ProductService {
     void deleteProductById(Long id);
 
     void changeScore(Long productId, Integer delta);
+
+    Page<Product> find(Integer minCost, Integer maxCost, String title, Integer page);
 }

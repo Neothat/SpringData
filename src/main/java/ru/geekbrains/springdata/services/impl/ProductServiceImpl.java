@@ -1,11 +1,15 @@
 package ru.geekbrains.springdata.services.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.geekbrains.springdata.entities.Product;
 import ru.geekbrains.springdata.exceptions.ProductNotFoundException;
 import ru.geekbrains.springdata.repositories.ProductRepository;
+import ru.geekbrains.springdata.repositories.specifications.ProductSpecifications;
 import ru.geekbrains.springdata.services.ProductService;
 
 import java.util.List;
@@ -15,6 +19,21 @@ import java.util.Optional;
 public class ProductServiceImpl implements ProductService {
 
     private ProductRepository productRepository;
+
+    public Page<Product> find(Integer minCost, Integer maxCost, String title, Integer page) {
+        Specification<Product> spec = Specification.where(null);
+        if (minCost != null) {
+            spec = spec.and(ProductSpecifications.scoreGreaterOrEqualsThat(minCost));
+        }
+        if (maxCost != null) {
+            spec = spec.and(ProductSpecifications.scoreLessThanOrEqualsThat(maxCost));
+        }
+        if (title != null) {
+            spec = spec.and(ProductSpecifications.titleLike(title));
+        }
+
+        return productRepository.findAll(spec, PageRequest.of(page - 1, 5));
+    }
 
     @Transactional
     @Override
