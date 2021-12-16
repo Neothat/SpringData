@@ -24,10 +24,10 @@ public class ProductServiceImpl implements ProductService {
     public Page<Product> find(Integer minCost, Integer maxCost, String title, Integer page) {
         Specification<Product> spec = Specification.where(null);
         if (minCost != null) {
-            spec = spec.and(ProductSpecifications.scoreGreaterOrEqualsThat(minCost));
+            spec = spec.and(ProductSpecifications.costGreaterOrEqualsThat(minCost));
         }
         if (maxCost != null) {
-            spec = spec.and(ProductSpecifications.scoreLessThanOrEqualsThat(maxCost));
+            spec = spec.and(ProductSpecifications.costLessThanOrEqualsThat(maxCost));
         }
         if (title != null) {
             spec = spec.and(ProductSpecifications.titleLike(title));
@@ -51,8 +51,8 @@ public class ProductServiceImpl implements ProductService {
 
     @Transactional
     @Override
-    public void saveProduct(Product product) {
-        productRepository.save(product);
+    public Product saveProduct(Product product) {
+        return productRepository.save(product);
     }
 
     @Transactional

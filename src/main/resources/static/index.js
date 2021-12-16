@@ -12,7 +12,7 @@ angular.module('app', []).controller('indexController', function ($scope, $http)
                 page: $scope.page ? $scope.filter.page : null
             }
         }).then(function (response) {
-            $scope.ProductsList = response.data.content;
+            $scope.ProductsPage = response.data;
         });
     };
 
