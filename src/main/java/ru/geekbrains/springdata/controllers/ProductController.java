@@ -34,11 +34,6 @@ public class ProductController {
                 .orElseThrow(() -> new ProductNotFoundException("Product not found, id: " + id)));
     }
 
-    @GetMapping("/change_score")
-    public void changeScore(@RequestParam Long productId, @RequestParam Integer delta) {
-        productService.changeScore(productId, delta);
-    }
-
     @PostMapping
     public void addProduct(@RequestBody Product product) {
         product.setId(null);

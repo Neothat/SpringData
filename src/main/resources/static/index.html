@@ -34,28 +34,19 @@
         <p></p>
         <button class="btn btn-outline-warning btn-sm" style="width: 100%;" type="submit">Submit</button>
     </form>
+
     <h3>Product's List</h3>
     <table class="table table-dark table-hover">
         <tr>
             <td>ID</td>
             <td>Product's name</td>
             <td>Cost</td>
-            <td>Number</td>
-            <td>Action</td>
         </tr>
         <tbody>
         <tr ng-repeat="p in ProductsList">
             <td>{{p.id}}</td>
             <td>{{p.title}}</td>
             <td>{{p.cost}}</td>
-            <td>
-                <button class="btn btn-outline-success" ng-click="changeScore(p.id, -1)">-</button>
-                {{p.score}}
-                <button class="btn btn-outline-success" ng-click="changeScore(p.id, 1)">+</button>
-            </td>
-            <td>
-                <button class="btn btn-outline-danger" ng-click="deleteProduct(p.id)">Delete</button>
-            </td>
         </tr>
         </tbody>
     </table>

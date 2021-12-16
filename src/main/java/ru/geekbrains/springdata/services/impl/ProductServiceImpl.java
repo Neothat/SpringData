@@ -6,6 +6,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.geekbrains.springdata.dto.ProductDto;
 import ru.geekbrains.springdata.entities.Product;
 import ru.geekbrains.springdata.exceptions.ProductNotFoundException;
 import ru.geekbrains.springdata.repositories.ProductRepository;
@@ -47,24 +48,19 @@ public class ProductServiceImpl implements ProductService {
         return productRepository.findById(id);
     }
 
-    @Transactional
-    @Override
-    public void addProduct() {
-//        productRepository.save();
-    }
-
-    @Transactional
-    @Override
-    public void changeScore(Long productId, Integer delta) {
-        Product product = productRepository.findById(productId).orElseThrow(
-                () -> new ProductNotFoundException("Unable to change product's score. Product not found, id: " + productId));
-        product.setScore(product.getScore() + delta);
-    }
 
     @Transactional
     @Override
     public void saveProduct(Product product) {
         productRepository.save(product);
+    }
+
+    @Transactional
+    public Product update(ProductDto productDto) {
+        Product product = productRepository.findById(productDto.getId()).orElseThrow(() -> new ProductNotFoundException("Невозможно обновить продукта, не надйен в базе, id: " + productDto.getId()));
+        product.setCost(productDto.getCost());
+        product.setTitle(productDto.getTitle());
+        return product;
     }
 
     @Transactional

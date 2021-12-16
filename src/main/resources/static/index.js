@@ -16,33 +16,33 @@ angular.module('app', []).controller('indexController', function ($scope, $http)
         });
     };
 
-    $scope.deleteProduct = function (studentId) {
-        $http.delete(contextPath + '/products/' + studentId)
-            .then(function (response) {
-                $scope.loadProducts();
-            });
-    }
-
-    $scope.changeScore = function (productId, delta) {
-        $http({
-            url: contextPath + '/products/change_score',
-            method: 'GET',
-            params: {
-                productId: productId,
-                delta: delta
-            }
-        }).then(function (response) {
-            $scope.loadProducts();
-        });
-    }
-
-    $scope.addProductJson = function () {
-        console.log($scope.ProductJson);
-        $http.post(contextPath + '/products', $scope.ProductJson)
-            .then(function (response) {
-                $scope.loadProducts();
-            });
-    }
+    // $scope.deleteProduct = function (studentId) {
+    //     $http.delete(contextPath + '/products/' + studentId)
+    //         .then(function (response) {
+    //             $scope.loadProducts();
+    //         });
+    // }
+    //
+    // $scope.changeScore = function (productId, delta) {
+    //     $http({
+    //         url: contextPath + '/products/change_score',
+    //         method: 'GET',
+    //         params: {
+    //             productId: productId,
+    //             delta: delta
+    //         }
+    //     }).then(function (response) {
+    //         $scope.loadProducts();
+    //     });
+    // }
+    //
+    // $scope.addProductJson = function () {
+    //     console.log($scope.ProductJson);
+    //     $http.post(contextPath + '/products', $scope.ProductJson)
+    //         .then(function (response) {
+    //             $scope.loadProducts();
+    //         });
+    // }
 
     $scope.loadProducts();
 });
