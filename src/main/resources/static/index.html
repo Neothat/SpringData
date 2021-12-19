@@ -41,12 +41,16 @@
             <td>ID</td>
             <td>Product's name</td>
             <td>Cost</td>
+            <td>Add to Cart</td>
         </tr>
         <tbody>
         <tr ng-repeat="p in ProductsPage.content">
             <td>{{p.id}}</td>
             <td>{{p.title}}</td>
             <td>{{p.cost}}</td>
+            <td>
+                <button class="btn btn-outline-success" ng-click="addToCart(p.id)">Add</button>
+            </td>
         </tr>
         </tbody>
     </table>
@@ -67,6 +71,27 @@
         <p></p>
         <button type="submit" class="btn btn-warning">Apply Filters</button>
     </form>
+    <h3>Cart</h3>
+    <table class="table table-dark table-hover">
+        <tr>
+            <td>ID</td>
+            <td>Product's name</td>
+            <td>Total Cost</td>
+            <td>Count</td>
+            <td>Remove from cart</td>
+        </tr>
+        <tbody>
+        <tr ng-repeat="c in Cart">
+            <td>{{c.id}}</td>
+            <td>{{c.title}}</td>
+            <td>{{c.cost}}</td>
+            <td>{{c.summaryCount}}</td>
+            <td>
+                <button class="btn btn-outline-danger" ng-click="removeFromCart(c.id)">Remove</button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
 </div>
 </body>
 </html>

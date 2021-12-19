@@ -5,10 +5,14 @@ import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 import ru.geekbrains.springdata.converters.ProductConverter;
 import ru.geekbrains.springdata.dto.ProductDto;
+import ru.geekbrains.springdata.dto.ProductDtoWithSummaryCount;
 import ru.geekbrains.springdata.entities.Product;
 import ru.geekbrains.springdata.exceptions.ProductNotFoundException;
+import ru.geekbrains.springdata.services.CartServices;
 import ru.geekbrains.springdata.services.ProductService;
 import ru.geekbrains.springdata.validators.ProductValidator;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/products")
@@ -17,6 +21,7 @@ public class ProductController {
     private ProductService productService;
     private ProductConverter productConverter;
     private ProductValidator productValidator;
+    private CartServices cartServices;
 
     @GetMapping
     public Page<ProductDto> getAllProducts(@RequestParam(name = "min", required = false) Integer min,
@@ -58,6 +63,21 @@ public class ProductController {
         return productConverter.entityToDto(product);
     }
 
+    @PostMapping("/cart")
+    public void addToCart(@RequestBody Long id) {
+        cartServices.addToCart(id);
+    }
+
+    @GetMapping("/cart")
+    public List<ProductDtoWithSummaryCount> getCart() {
+        return cartServices.showCart();
+    }
+
+    @DeleteMapping("/cart/{id}")
+    public void getCart(@PathVariable Long id) {
+        cartServices.removeFromCart(id);
+    }
+
     @Autowired
     public void setProductService(ProductService productService) {
         this.productService = productService;
@@ -71,5 +91,10 @@ public class ProductController {
     @Autowired
     public void setProductValidator(ProductValidator productValidator) {
         this.productValidator = productValidator;
+    }
+
+    @Autowired
+    public void setCartServices(CartServices cartServices) {
+        this.cartServices = cartServices;
     }
 }
