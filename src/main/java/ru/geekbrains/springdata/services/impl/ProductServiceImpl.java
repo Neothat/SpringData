@@ -6,6 +6,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.geekbrains.springdata.dto.ProductDto;
 import ru.geekbrains.springdata.entities.Product;
 import ru.geekbrains.springdata.exceptions.ProductNotFoundException;
 import ru.geekbrains.springdata.repositories.ProductRepository;
@@ -23,10 +24,10 @@ public class ProductServiceImpl implements ProductService {
     public Page<Product> find(Integer minCost, Integer maxCost, String title, Integer page) {
         Specification<Product> spec = Specification.where(null);
         if (minCost != null) {
-            spec = spec.and(ProductSpecifications.scoreGreaterOrEqualsThat(minCost));
+            spec = spec.and(ProductSpecifications.costGreaterOrEqualsThat(minCost));
         }
         if (maxCost != null) {
-            spec = spec.and(ProductSpecifications.scoreLessThanOrEqualsThat(maxCost));
+            spec = spec.and(ProductSpecifications.costLessThanOrEqualsThat(maxCost));
         }
         if (title != null) {
             spec = spec.and(ProductSpecifications.titleLike(title));
@@ -47,24 +48,19 @@ public class ProductServiceImpl implements ProductService {
         return productRepository.findById(id);
     }
 
-    @Transactional
-    @Override
-    public void addProduct() {
-//        productRepository.save();
-    }
 
     @Transactional
     @Override
-    public void changeScore(Long productId, Integer delta) {
-        Product product = productRepository.findById(productId).orElseThrow(
-                () -> new ProductNotFoundException("Unable to change product's score. Product not found, id: " + productId));
-        product.setScore(product.getScore() + delta);
+    public Product saveProduct(Product product) {
+        return productRepository.save(product);
     }
 
     @Transactional
-    @Override
-    public void saveProduct(Product product) {
-        productRepository.save(product);
+    public Product update(ProductDto productDto) {
+        Product product = productRepository.findById(productDto.getId()).orElseThrow(() -> new ProductNotFoundException("Невозможно обновить продукта, не надйен в базе, id: " + productDto.getId()));
+        product.setCost(productDto.getCost());
+        product.setTitle(productDto.getTitle());
+        return product;
     }
 
     @Transactional

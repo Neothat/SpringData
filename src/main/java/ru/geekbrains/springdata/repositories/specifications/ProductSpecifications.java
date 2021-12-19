@@ -4,11 +4,11 @@ import org.springframework.data.jpa.domain.Specification;
 import ru.geekbrains.springdata.entities.Product;
 
 public class ProductSpecifications {
-    public static Specification<Product> scoreGreaterOrEqualsThat(Integer cost) {
+    public static Specification<Product> costGreaterOrEqualsThat(Integer cost) {
         return (root, criteriaQuery, criteriaBuilder) -> criteriaBuilder.greaterThanOrEqualTo(root.get("cost"), cost);
     }
 
-    public static Specification<Product> scoreLessThanOrEqualsThat(Integer cost) {
+    public static Specification<Product> costLessThanOrEqualsThat(Integer cost) {
         return (root, criteriaQuery, criteriaBuilder) -> criteriaBuilder.lessThanOrEqualTo(root.get("cost"), cost);
     }
 

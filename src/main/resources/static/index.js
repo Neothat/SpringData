@@ -12,35 +12,30 @@ angular.module('app', []).controller('indexController', function ($scope, $http)
                 page: $scope.page ? $scope.filter.page : null
             }
         }).then(function (response) {
-            $scope.ProductsList = response.data.content;
+            $scope.ProductsPage = response.data;
         });
     };
 
-    $scope.deleteProduct = function (studentId) {
-        $http.delete(contextPath + '/products/' + studentId)
+    $scope.loadCart = function () {
+        $http({
+            url: contextPath + '/products/cart',
+            method: 'get',
+        }).then(function (response) {
+            $scope.Cart = response.data;
+        });
+    };
+
+    $scope.addToCart = function (productId) {
+        $http.post(contextPath + '/products/cart', productId)
             .then(function (response) {
-                $scope.loadProducts();
+                $scope.loadCart();
             });
     }
 
-    $scope.changeScore = function (productId, delta) {
-        $http({
-            url: contextPath + '/products/change_score',
-            method: 'GET',
-            params: {
-                productId: productId,
-                delta: delta
-            }
-        }).then(function (response) {
-            $scope.loadProducts();
-        });
-    }
-
-    $scope.addProductJson = function () {
-        console.log($scope.ProductJson);
-        $http.post(contextPath + '/products', $scope.ProductJson)
+    $scope.removeFromCart = function (productId) {
+        $http.delete(contextPath + '/products/cart/' + productId)
             .then(function (response) {
-                $scope.loadProducts();
+                $scope.loadCart();
             });
     }
 
