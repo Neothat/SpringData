@@ -31,17 +31,37 @@
                                    aria-describedby="inputGroup-sizing-sm" style="margin-left: 10px;">
 
                             <button id="navLoginSubmit" class="btn btn-outline-warning btn-sm"
-                                    style="margin-left: 10px;" type="submit">Войти
+                                    style="margin-left: 10px;" type="submit">Sign in
                             </button>
                         </div>
                     </form>
                 </li>
                 <li class="nav-item" ng-show="isUserLoggedIn()" style="padding: 4px;">
-                    <button class="btn btn-outline-secondary btn-sm" ng-click="tryToLogout()">Выйти</button>
+                    <button class="btn btn-outline-secondary btn-sm" ng-click="tryToLogout()">Log out</button>
                 </li>
             </ul>
         </div>
     </nav>
+
+    <form class="align-middle" ng-submit="tryToReg()">
+        <div class="input-group input-group-sm" style="padding: 4px;">
+            <input id="usernameField" class="form-control" ng-model="reg.username" type="text"
+                   aria-describedby="inputGroup-sizing-sm" style="margin-left: 10px;">
+
+            <input id="emailField" class="form-control" ng-model="reg.email" type="text"
+                   aria-describedby="inputGroup-sizing-sm" style="margin-left: 10px;">
+
+            <input id="passwordField" class="form-control" ng-model="reg.password" type="password"
+                   aria-describedby="inputGroup-sizing-sm" style="margin-left: 10px;">
+
+            <input id="confirmPasswordField" class="form-control" ng-model="reg.confirmPassword" type="password"
+                   aria-describedby="inputGroup-sizing-sm" style="margin-left: 10px;">
+
+            <button id="regSubmit" class="btn btn-outline-warning btn-sm"
+                    style="margin-left: 10px;" type="submit">Log in
+            </button>
+        </div>
+    </form>
 
     <form novalidate ng-submit="loadProducts()">
         <div class="form-floating input-group-sm">

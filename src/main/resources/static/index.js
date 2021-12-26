@@ -57,6 +57,19 @@ angular.module('app', ['ngStorage']).controller('indexController', function ($sc
             });
     };
 
+    $scope.tryToReg = function () {
+        $http.post('http://localhost:8189/app/registration', $scope.reg)
+            .then(function successCallback(response) {
+                alert('Success');
+
+                $scope.reg.username = null;
+                $scope.reg.email = null;
+                $scope.reg.password = null;
+                $scope.reg.confirmPassword = null;
+
+            });
+    };
+
     $scope.tryToLogout = function () {
         $scope.clearUser();
         if ($scope.user.username) {
